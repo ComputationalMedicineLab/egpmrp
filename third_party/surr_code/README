@@ -1,0 +1,13 @@
+
+This distribution contains an adaptation of a small subset of code accompanying 
+the paper:
+
+    Slice sampling covariance hyperparameters of latent Gaussian models.
+    Iain Murray and Ryan Prescott Adams.
+
+    Advances in Neural Information Processing Systems (NIPS) 23, 2010
+    http://books.nips.cc/
+
+The full codebase is available from:
+    http://homepages.inf.ed.ac.uk/imurray2/pub/10hypers/
+

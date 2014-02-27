@@ -1,0 +1,12 @@
+
+This subdirectory contains the main function code from the paper:
+
+    Elliptical Slice Sampling.
+    Iain Murray, Ryan Prescott Adams, and David J. C. MacKay
+
+    The Proceedings of the 13th International Conference on Artificial 
+    Intelligence and Statistics (AISTATS), JMLR W&CP 9:541?548, 2010
+
+The full codebase is available from:
+    http://homepages.inf.ed.ac.uk/imurray2/pub/10ess/
+
