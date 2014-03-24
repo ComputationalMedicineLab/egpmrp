@@ -80,15 +80,16 @@ function [ priorFun ] = makeTruncatedPriorFun( f, xMin, xMax )
     priorFun = @prior;
 end
 
-function [ priorFun ] = makeExpPriorFun( mean )
+function [ priorFun ] = makeExpPriorFun( a )
     %MAKEEXPPRIORFUN Returns function f(x) that computes log prob x under
-    %exponential prior.
-    a = 1/mean;
-    loga = log(a);
+    %exponential prior p(x) = 1/a * exp(-x/a).
+    
+    log_a = log(a);
     
     function [logProb] = prior(logX)
+        
         x = exp(logX);
-        logProb = loga - x * a + log(abs(logX)) + logX;
+        logProb = -log_a - x/a;
     end
     
     priorFun = @prior;
