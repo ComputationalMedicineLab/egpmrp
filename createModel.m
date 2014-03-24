@@ -97,7 +97,7 @@ end
 
 function [priorFun] = makeUniformPriorFun(xMin, xMax)
     % MAKEUNIFORMPRIORFUN Creates function f(x) computing the prior of x under
-    % uniform probability.
+    % uniform probability p(x) = c. (We take c = 1.)
     logMin = log(xMin);
     logMax = log(xMax);
     
@@ -123,12 +123,12 @@ function [ priorFun ] = makeLogGaussianPriorFun( logMean, sd ) %#ok<DEFNU>
     priorFun = @prior;
 end
 
-function [ priorFun ] = makeInversePriorFun() %#ok<DEFNU>
+function [ priorFun ] = makeLogarithmicPriorFun() %#ok<DEFNU>
     %MAKEPOWERPRIORFUN Returns function f(x) that computes log prob x under
-    %1/x prior (modulo the constant).
+    %the (improper) logarithmic prior p(x) = c/x. (We take c = 1.)
        
-    function [logProb] = prior(~)
-        logProb = 0;
+    function [logProb] = prior(logX)
+        logProb = -logX;
     end
     
     priorFun = @prior;
