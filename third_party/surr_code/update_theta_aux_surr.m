@@ -50,7 +50,7 @@ function [theta, ff, aux, cholK] = update_theta_aux_surr(theta, ff, Lfn, Kfn, au
 % hasn't implemented that option.
 
 % Slight modification by Tom Lasko, September 2013, to attempt recovery from
-% a non-positive-semidefinite matrix, as noted below.
+% poorly chosen auxiliary noise, as noted below (marked with TL).
 
 N = numel(ff);
 
@@ -101,7 +101,7 @@ else
     aux = pp.aux_std;
 end
 cholK = pp.U;
-
+end
 
 function pp = theta_changed(pp)
 % Will call after changing hyperparameters to update covariances and
@@ -118,14 +118,17 @@ if pp.adapt_aux
     pp.Sinv_g = pp.gg ./ pp.aux_var;
 end
 pp.U = chol(K);
+
 pp.iK = inv(K);
-try % try/catch with code to attempt recovery added by Tom Lasko
+try % TL: try/catch to attempt recovery if aux_var is inappropriate. This is 
+    % a total hack - it would be more correct to use the 
+    % aux_std_fn machinery provided for in the original design. 
     pp.U_invR = chol(plus_diag(pp.iK, 1./pp.aux_var));
 catch err
-    fprintf('Error inverting matrix:\n%s\nTrying to recover using larger added diagonal...', err.message)
+    fprintf('Error decomposing matrix:\n%s\nTrying to recover using larger added diagonal...', err.message)
     fprintf('\nCond %f\n',cond(plus_diag(pp.iK, 1./pp.aux_var)));
     
-    % Make one attempt at recovery by adding larger diagonal, then crash if
+    % TL: Make one attempt at recovery by adding larger diagonal, then crash if
     % insufficient.
     eps = 1e-5 * max(diag(pp.iK));
     fprintf('Trying matrix with cond %f...\n', cond(plus_diag(pp.iK, eps)));
@@ -133,6 +136,7 @@ catch err
     fprintf('Done.\n');
 end
 %pp.U_noise = chol(plus_diag(K, aux_var_vec));
+end
 
 function pp = eval_particle(pp, Lpstar_min, Lfn, theta_Lprior, theta_unchanged)
 
@@ -168,4 +172,5 @@ Lg_f = -0.5*sum((pp.gg - pp.ff).^2)./pp.aux_var - sum(log(pp.aux_var.*ones(size(
 pp.Lpstar = Ltprior + Lg_f + Lfprior + Lfn(pp.ff) + LJacobian;
 %fprintf('pp.Lpstar %g min %g\n', pp.Lpstar, Lpstar_min);
 pp.on_slice = (pp.Lpstar >= Lpstar_min);
+end
 
