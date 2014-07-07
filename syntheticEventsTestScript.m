@@ -3,7 +3,7 @@
 % the paper:
 
 % Lasko TA. Efficient Inference of Gaussian Process Modulated Renewal Processes 
-% with Application to Medical Event Data. ArXiv:1402.4732 [stat.ML].
+% with Application to Medical Event Data. UAI 2014 (and ArXiv:1402.4732 [stat.ML]).
 
 % (c) Copyright 2013 Thomas A. Lasko
 
