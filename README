@@ -1,7 +1,7 @@
 This distribution contains code to used to compute the results in:
 
 Efficient Inference of Gaussian Process Modulated Renewal Processes with Application to Medical Event Data
-Thomas A. Lasko. arXiv:1402.4732 [stat.ML].
+Thomas A. Lasko. UAI 2014 (and arXiv:1402.4732 [stat.ML]).
 
 I have tested the code in Matlab R2013a, but it may run on earlier versions.
 
